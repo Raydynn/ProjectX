@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork
 {
-    public class Class1
+    public class Panda
     {
+
     }
 }

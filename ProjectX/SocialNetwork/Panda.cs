@@ -19,7 +19,7 @@ namespace SocialNetwork
                 if (value.Contains("@")&&value.Substring(value.IndexOf('@')).Contains("."))
                 {
                     email = value;
-                }            
+                }
             }
         }
         public GenderType Gender { get; set; }
@@ -40,6 +40,29 @@ namespace SocialNetwork
                 IsMale = false;
                 IsFemale = true;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            Panda other = obj as Panda;
+            if (other == null)
+            {
+                return false;
+            }
+
+            return other.Name.Equals(this.Name)&&
+                other.Email.Equals(this.Email)&&
+                other.Gender.Equals(this.Gender);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode() ^ this.Email.GetHashCode() ^ this.Gender.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return this.Name + "(" + this.Email + ") -- " + this.Gender;
         }
     }
 }

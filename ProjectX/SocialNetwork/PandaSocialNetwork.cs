@@ -8,11 +8,12 @@ namespace SocialNetwork
 {
     class PandaSocialNetwork
     {
-        public List<Panda> PandaList { get; set; }
+        private List<Panda> pandaList = new List<Panda>();
+        private Dictionary<Panda, List<Panda>> pandaFriendList = new Dictionary<Panda, List<Panda>>();
 
         private bool HasPanda(Panda isSocial)
         {
-            if (PandaList.Contains(isSocial))
+            if (pandaList.Contains(isSocial))
             {
                 return true;
             }
@@ -22,20 +23,40 @@ namespace SocialNetwork
             }
         }
 
-        private MakeFriends(Panda panda1, Panda panda2)
+        private void MakeFriends(Panda panda1, Panda panda2)
         {
-            
+            if (!pandaList.Contains(panda1))
+            {
+                pandaList.Add(panda1);
+            }
+
+            if (!pandaList.Contains(panda2))
+            {
+                pandaList.Add(panda2);
+            }
+
+            if (!pandaFriendList.ContainsKey(panda1))
+            {
+                pandaFriendList.Add(panda1, new List<Panda>());
+            }
+
+            if (pandaFriendList[panda1].Contains(panda2))
+            {
+                throw new PandasAlreadyFriendsException(panda1, panda2);
+            }
+
+            pandaFriendList[panda1].Add(panda2);
         }
 
         public PandaSocialNetwork(Panda newPanda)
         {
-            if (PandaList.Contains(newPanda))
+            if (pandaList.Contains(newPanda))
 	        {
 		        throw new Exception("Panda already there!");
 	        }
             else
 	        {
-                PandaList.Add(newPanda);
+                pandaList.Add(newPanda);
 	        }          
         }
     }
